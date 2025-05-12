@@ -266,7 +266,7 @@ li{
 
   <script>
 
-     const API = 'http://localhost:5000';// Replace with your API URL
+     const API = 'https://new-sr-backend.onrender.com';// Replace with your API URL
     document.getElementById('uploadForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -279,7 +279,7 @@ li{
       progressContainer.style.display = 'block';
       progressBar.value = 0;
 
-      xhr.open('POST', 'http://localhost:5000/pdf/upload', true);
+      xhr.open('POST', 'https://new-sr-backend.onrender.com/pdf/upload', true);
 
       // Track upload progress
       xhr.upload.onprogress = function (e) {
@@ -309,7 +309,7 @@ li{
     });
 
    async function loadPDFs() {
-  const res = await fetch('http://localhost:5000/pdf/all');
+  const res = await fetch('https://new-sr-backend.onrender.com/pdf/all');
   const pdfs = await res.json();
   const list = document.getElementById('pdfList');
       
@@ -319,7 +319,7 @@ li{
     li.innerHTML = `
       <strong>${pdf.title}</strong> - ${pdf.description}
             
-      [<a href="http://localhost:5000/pdf/view/${pdf._id}" target="_blank">View PDF</a>]
+      [<a href="https://new-sr-backend.onrender.com/pdf/view/${pdf._id}" target="_blank">View PDF</a>]
       <button class="delete-btn" onclick="deletePdf('${pdf._id}', this.parentElement)">🗑️</button>
     `;
     list.insertBefore(li, list.firstChild); // 👈 This makes it prepend instead of append
