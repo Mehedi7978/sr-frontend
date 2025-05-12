@@ -1,7 +1,7 @@
 
 
 
-  const API = 'http://localhost:5000'; // Change to your Render URL after deployment
+  const API = 'https://new-sr-backend.onrender.com'; // Change to your Render URL after deployment
 const user = JSON.parse(localStorage.getItem('user'));
 
 if (location.pathname.endsWith('index.html')) {
