@@ -408,7 +408,7 @@
     
 
     async function loadPDFs() {
-      const res = await fetch('http://localhost:5000/pdf/all');
+      const res = await fetch('https://new-sr-backend.onrender.com/pdf/all');
       const pdfs = await res.json();
       const list = document.getElementById('pdfList');
       list.innerHTML = '';
@@ -416,7 +416,7 @@
         const li = document.createElement('li');
         li.innerHTML = `
           <strong>${pdf.title}</strong> - ${pdf.description}
-          [<a href="http://localhost:5000/pdf/view/${pdf._id}" target="_blank">View PDF</a>]
+          [<a href="https://new-sr-backend.onrender.com/pdf/view/${pdf._id}" target="_blank">View PDF</a>]
         `;
         list.appendChild(li);
       });
@@ -489,7 +489,7 @@
   <div id="posts" class="container"></div>
 
   <script>
-    const API = "http://localhost:5000";
+    const API = "https://new-sr-backend.onrender.com";
 
     // Toggle between posts and PDFs
     const allpost = document.getElementById("allposts");
