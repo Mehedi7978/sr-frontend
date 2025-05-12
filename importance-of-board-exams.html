@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about the importance of board exams and how to prepare effectively.">
+    <title>Board Exams | SR Hossain Academy</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: #4CAF50;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin: 0 10px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .hero {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .section {
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .importance-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .importance-card {
+            flex: 1;
+            min-width: 250px;
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .contact input, .contact textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .contact button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 700px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background: #4CAF50;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                padding: 10px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">SR Hossain's <span>Academy</span></div>
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <ul class="nav-links" id="nav-links">
+                
+                <li><a href="https://www.educart.co/news/which-factors-of-board-exams-help-students-to-grow-in-career-and-life?srsltid=AfmBOop1LdGOtUA-XvZb-5s-SueNCYnHAJloIRLCH4jw2b7joOpFWNmK">Importance</a></li>
+                <li><a href="content.html">Preparation Tips</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="hero">
+            <h1>Board Exams: A Gateway to Your Future</h1>
+            <p>Discover the significance of board exams and how to excel in them with SR Hossain's guidance.</p>
+            <button class="btn-primary" onclick="scrollToSection('importance')">Learn More</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="importance" class="section">
+            <div class="container">
+                <h2>Why Board Exams Matter</h2>
+                <p>Board exams are a crucial milestone in every student's academic journey. They not only evaluate your knowledge but also prepare you for future challenges.</p>
+                <div class="importance-grid">
+                    <div class="importance-card">
+                        <h3>1. Academic Recognition</h3>
+                        <p>Board exam results are recognized globally, opening doors to higher education opportunities.</p>
+                    </div>
+                    <div class="importance-card">
+                        <h3>2. Career Foundation</h3>
+                        <p>Strong performance in board exams can lead to scholarships and better career prospects.</p>
+                    </div>
+                    <div class="importance-card">
+                        <h3>3. Personal Growth</h3>
+                        <p>Preparing for board exams builds discipline, time management, and problem-solving skills.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="preparation" class="section">
+            <div class="container">
+                <h2>Preparation Tips</h2>
+                <ul>
+                    <li><strong>Understand the Syllabus:</strong> Familiarize yourself with the exam syllabus and focus on key topics.</li>
+                    <li><strong>Create a Study Plan:</strong> Allocate time for each subject and stick to your schedule.</li>
+                    <li><strong>Practice Regularly:</strong> Solve past papers and take mock tests to identify weak areas.</li>
+                    <li><strong>Stay Healthy:</strong> Maintain a balanced diet, exercise regularly, and get enough sleep.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact">
+            <div class="container">
+                <h2>Contact SR Hossain</h2>
+                <p>Have questions or need guidance? Reach out to us!</p>
+                <form id="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit" class="btn-secondary">Submit</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 SR Hossain Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation toggle for mobile
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('active');
+        });
+
+        // Scroll to section
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            alert('Thank you for reaching out! We will get back to you soon.');
+        });
+    </script>
+</body>
+</html>

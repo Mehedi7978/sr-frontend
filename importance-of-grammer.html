@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the importance of English grammar in modern life with SR Hossain's platform.">
+    <link rel="icon" href="owner.jpeg" type="image/jpeg" />
+
+    <title>Importance of English Grammar | SR Hossain</title>
+<style>
+    /* General Styles */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+header {
+    background: #4CAF50;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 10px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.hero {
+    padding: 50px 20px;
+}
+
+.section {
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.tips-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.tip-card {
+    flex: 1;
+    min-width: 250px;
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact input, .contact textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.contact button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.footer {
+    background: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 700px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background: #4CAF50;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 10px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+}
+</style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">SR Hossain's <span>Academy</span></div>
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <ul class="nav-links" id="nav-links">
+                
+                <li><a href="https://www.verbalplanet.com/learn-english/blog/english-grammar-rules-to-master.asp">Importance</a></li>
+                <li><a href="content.html">Grammar Tips</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="hero">
+            <h1>English Grammar in the Modern World</h1>
+            <p>Explore why English grammar is essential and how it shapes effective communication in today's globalized society.</p>
+            <button class="btn-primary" onclick="scrollToSection('importance')">Learn More</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="importance" class="section">
+            <div class="container">
+                <h2>Why English Grammar Matters</h2>
+                <p>In the modern world, English serves as a bridge for global communication. Proper grammar ensures clarity, professionalism, and effective expression in both written and spoken forms.</p>
+                <ul>
+                    <li><strong>Professional Growth:</strong> Mastery of grammar enhances job opportunities and career success.</li>
+                    <li><strong>Global Communication:</strong> English is the lingua franca, and good grammar helps avoid misunderstandings.</li>
+                    <li><strong>Academic Excellence:</strong> Grammar supports better writing, which is crucial for academic achievements.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="grammar-tips" class="section">
+            <div class="container">
+                <h2>Top Grammar Tips</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h3>1. Master Subject-Verb Agreement</h3>
+                        <p>Ensure your subjects and verbs agree in number and tense.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>2. Use Punctuation Correctly</h3>
+                        <p>Proper punctuation clarifies your message and enhances readability.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>3. Expand Your Vocabulary</h3>
+                        <p>Learn new words and their usage to enrich your communication.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section id="contact" class="section contact" style="opacity: 0;">
+            <div class="container">
+                <h2>Contact SR Hossain</h2>
+                <p>Have questions or want to learn more? Reach out to us!</p>
+                <form id="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit" class="btn-secondary">Submit</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 SR Hossain Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script>
+    // Navigation toggle for mobile
+document.getElementById('menu-toggle').addEventListener('click', function () {
+    const navLinks = document.getElementById('nav-links');
+    navLinks.classList.toggle('active');
+});
+
+// Scroll to section
+function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Contact form submission
+document.getElementById('contact-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    alert('Thank you for reaching out! We will get back to you soon.');
+});
+</script>
+</body>
+</html>

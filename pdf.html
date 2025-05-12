@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" href="owner.jpeg" type="image/jpeg" />
+    <title>SR Hossain pdfs notes</title>
+</head>
+<style>
+    
+
+/* Styling for the PDF container */
+#pdf-container {
+  font-family: 'Arial', sans-serif;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Section Headers */
+#pdf-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 2px solid #ccc;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+/* Form Styling */
+#uploadForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+#uploadForm input[type="text"],
+#uploadForm input[type="file"],
+#uploadForm button {
+  font-size: 1rem;
+  padding: 0.8rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#uploadForm input[type="text"]:focus,
+#uploadForm input[type="file"]:focus {
+  border-color: #007bff;
+  background: #f9f9f9;
+}
+
+#uploadForm button {
+  background: #007bff;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+}
+
+#uploadForm button:hover {
+  background: #0056b3;
+  transform: scale(1.02);
+}
+
+/* PDF List Styling */
+#pdfList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#pdfList li {
+  background: #f9f9f9;
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+#pdfList li:hover {
+ 
+  color: #000000;
+  transform: translateY(-2px);
+}
+
+#pdfList li a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+#pdfList li a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.delete-btn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  float: right;
+}
+li{
+  height: 400px;
+  width: 100%;
+}
+
+
+
+/* Footer Container */
+.footer {
+    background-color: #222;
+    color: #fff;
+    padding: 40px 0;
+    font-family: Arial, sans-serif;
+}
+
+.footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Footer Sections */
+.footer-sections {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.footer-about,
+.footer-links,
+.footer-contact {
+    flex: 1 1 300px;
+    margin: 20px;
+}
+
+.footer-about h3,
+.footer-links h3,
+.footer-contact h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #f8b400;
+}
+
+/* About Section */
+.footer-about p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #ddd;
+}
+
+/* Quick Links */
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+    color: #ddd;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: #f8b400;
+}
+
+/* Contact Section */
+.footer-contact p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #ddd;
+}
+
+.social-icons {
+    margin-top: 15px;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+.social-icons a img {
+    width: 30px;
+    height: 30px;
+}
+
+.social-icons a:hover {
+    transform: scale(1.2);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    border-top: 1px solid #444;
+    margin-top: 20px;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .footer-sections {
+        flex-direction: column;
+    }
+
+    .footer-about,
+    .footer-links,
+    .footer-contact {
+        margin: 10px 0;
+    }
+}
+
+</style>
+<body>
+    
+
+
+     <div id="pdf-container" onload="loadPDFs()">
+
+  <h2>Upload PDF</h2>
+  <form id="uploadForm">
+    <input type="text" name="title" placeholder="Title" required><br>
+    <input type="text" name="description" placeholder="Description" required><br>
+    <input type="file" name="file" accept="application/pdf" required><br>
+    <button type="submit">Upload PDF</button>
+  </form>
+
+  <!-- Progress Bar -->
+  <div id="progress-container" style="display: none;">
+    <label for="progress-bar">Uploading...</label>
+    <progress id="progress-bar" value="0" max="100"></progress>
+  </div>
+
+  <h2>Available PDFs</h2>
+  <ul id="pdfList"></ul>
+
+  <script>
+
+     const API = 'http://localhost:5000';// Replace with your API URL
+    document.getElementById('uploadForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const form = new FormData(this);
+      const xhr = new XMLHttpRequest();
+
+      // Show the progress bar
+      const progressContainer = document.getElementById('progress-container');
+      const progressBar = document.getElementById('progress-bar');
+      progressContainer.style.display = 'block';
+      progressBar.value = 0;
+
+      xhr.open('POST', 'http://localhost:5000/pdf/upload', true);
+
+      // Track upload progress
+      xhr.upload.onprogress = function (e) {
+        if (e.lengthComputable) {
+          const percentComplete = (e.loaded / e.total) * 100;
+          progressBar.value = percentComplete;
+        }
+      };
+
+      xhr.onload = function () {
+        if (xhr.status === 201) {
+          alert('Uploaded!');
+          progressContainer.style.display = 'none';
+          loadPDFs();
+        } else {
+          alert('Failed to upload');
+          progressContainer.style.display = 'none';
+        }
+      };
+
+      xhr.onerror = function () {
+        alert('An error occurred during the upload.');
+        progressContainer.style.display = 'none';
+      };
+
+      xhr.send(form);
+    });
+
+   async function loadPDFs() {
+  const res = await fetch('http://localhost:5000/pdf/all');
+  const pdfs = await res.json();
+  const list = document.getElementById('pdfList');
+      
+  list.innerHTML = '';
+  pdfs.forEach(pdf => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <strong>${pdf.title}</strong> - ${pdf.description}
+            
+      [<a href="http://localhost:5000/pdf/view/${pdf._id}" target="_blank">View PDF</a>]
+      <button class="delete-btn" onclick="deletePdf('${pdf._id}', this.parentElement)">🗑️</button>
+    `;
+    list.insertBefore(li, list.firstChild); // 👈 This makes it prepend instead of append
+  });
+}
+
+
+    loadPDFs();
+
+
+
+
+
+    //looading function
+
+async function deletePdf(pdfId, pdfElement) {
+  if (!confirm('Are you sure you want to delete this PDF?')) return;
+
+  const button = pdfElement.querySelector('.delete-btn');
+  if (!button) {
+    console.error('Delete button not found in the pdfElement');
+    return;
+  }
+
+  showLoading(button, true);
+
+  try {
+    const res = await fetch(`${API}/pdf/${pdfId}`, {
+      method: 'DELETE',
+    });
+
+    if (res.status === 404) {
+      alert('PDF not found.');
+      return;
+    }
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error('Failed to delete PDF:', errorText);
+      alert('Failed to delete PDF.');
+      return;
+    }
+
+    pdfElement.remove();
+    alert('PDF deleted successfully!');
+  } catch (err) {
+    console.error('Error deleting PDF:', err);
+    alert('An unexpected error occurred.');
+  } finally {
+    showLoading(button, false);
+  }
+}
+
+function showLoading(element, show) {
+  if (show) {
+    element.disabled = true;
+    element.innerHTML = 'Loading...';
+  } else {
+    element.disabled = false;
+    element.innerHTML = 'Delete';
+  }
+}
+
+
+  </script>
+
+</div>
+
+
+ <footer class="footer">
+      <div class="container">
+          <div class="footer-sections">
+              <div class="footer-about">
+                  <h3>About SR <span>Academy</span></h3>
+                  <p>We are committed to providing quality education and empowering students to achieve their dreams. Join us to unlock your potential.</p>
+              </div>
+             
+              <div class="footer-contact">
+                  <h3>Contact Us</h3>
+                  <p>Email: info@educenter.com</p>
+                  <p>Phone: +123 456 7890</p>
+                  <div class="social-icons">
+                      <a href="#"><img src="images/facebook-icon.svg" alt="Facebook"></a>
+                      <a href="#"><img src="images/twitter-icon.svg" alt="Twitter"></a>
+                      <a href="#"><img src="images/instagram-icon.svg" alt="Instagram"></a>
+                      <a href="#"><img src="images/linkedin-icon.svg" alt="LinkedIn"></a>
+                  </div>
+              </div>
+          </div>
+          <div class="footer-bottom">
+              <p>&copy; 2025 SR Academy. All rights reserved.</p>
+          </div>
+      </div>
+  </footer>
+
+
+</body>
+</html>
