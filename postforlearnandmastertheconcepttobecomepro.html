@@ -439,7 +439,6 @@
   <div id="post-form">
     <h3>Create a Post</h3>
     <input type="text" id="title" placeholder="Enter post title"><br><br>
-
     <div id="editor-container">
       <div id="toolbar">
         <span class="ql-formats">
@@ -457,8 +456,8 @@
       </div>
       <div id="editor" placeholder="Write your description here..."></div>
     </div><br>
-
-    <input type="file" id="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"  style="display: none;"><br><br>
+    <input type="file" id="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display: none;"><br><br>
+    <label for="file" style="cursor: pointer; color: blue; text-decoration: underline;">Upload file</label><br><br>
     <button onclick="createPost()">Submit Post</button>
   </div>
 
@@ -466,55 +465,97 @@
 
   <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
   <script>
-    const API = 'https://new-sr-backend.onrender.com'; // Backend API URL
+    
 
-    // Initialize Quill editor
-    const quill = new Quill('#editor', {
-      theme: 'snow',
-      modules: {
-        toolbar: '#toolbar'
-      },
-      placeholder: 'Write your description here...',
-    });
 
-    // Configure Quill to handle images
-    quill.getModule('toolbar').addHandler('image', () => {
-      const input = document.createElement('input');
-      input.setAttribute('type', 'file');
-      input.setAttribute('accept', 'image/*');
-      input.click();
 
-      input.onchange = async () => {
-        const file = input.files[0];
-        const formData = new FormData();
-        formData.append('image', file);
+    const API = 'http://localhost:5000';
 
-        try {
-          const res = await fetch(`${API}/upload-image`, {
-            method: 'POST',
-            body: formData
-          });
-
-          if (!res.ok) throw new Error('Failed to upload image');
-          const { imageUrl } = await res.json();
-
-          // Insert uploaded image into Quill editor
-          const range = quill.getSelection();
-          quill.insertEmbed(range.index, 'image', imageUrl);
-        } catch (err) {
-          console.error('Image upload failed:', err);
-          alert('Failed to upload image.');
-        }
-      };
-    });
-
-    // Sanitize HTML to prevent XSS
-    function sanitizeHTML(html) {
-      const div = document.createElement('div');
-      div.textContent = html;
-      return div.innerHTML;
+// Initialize Quill editor
+const quill = new Quill('#editor', {
+  theme: 'snow',
+  modules: {
+    toolbar: {
+      container: '#toolbar',
+      handlers: {
+        image: imageHandler // Custom image handler
+      }
     }
+  },
+  placeholder: 'Write your description here...'
+});
 
+// Custom image handler for Quill
+async function imageHandler() {
+  const input = document.createElement('input');
+  input.setAttribute('type', 'file');
+  input.setAttribute('accept', 'image/*');
+  input.click();
+
+  input.onchange = async () => {
+    const file = input.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const res = await fetch(`${API}/upload-image`, {
+        method: 'POST',
+        body: formData
+      });
+      if (!res.ok) throw new Error('Failed to upload image');
+      const { url } = await res.json();
+      const range = quill.getSelection();
+      quill.insertEmbed(range.index, 'image', url); // Insert image URL
+    } catch (err) {
+      console.error('Image upload failed:', err);
+      alert('Failed to upload image.');
+    }
+  };
+}
+
+// Create a new post
+async function createPost() {
+  const button = document.querySelector('#post-form button');
+  showLoading(button, true);
+
+  const formData = new FormData();
+  const title = document.getElementById('title').value.trim();
+  const description = quill.root.innerHTML;
+  const fileInput = document.getElementById('file');
+
+  if (!title || !description || description === '<p><br></p>') {
+    alert('Title and description are required.');
+    showLoading(button, false);
+    return;
+  }
+
+  formData.append('title', title);
+  formData.append('description', description);
+  if (fileInput.files.length > 0) {
+    formData.append('file', fileInput.files[0]); // For PDFs or other files
+  }
+
+  try {
+    const res = await fetch(`${API}/post`, {
+      method: 'POST',
+      body: formData
+    });
+    if (!res.ok) throw new Error('Failed to create post');
+    await res.json();
+    alert('Post created successfully!');
+    loadPosts();
+    document.getElementById('title').value = '';
+    quill.setText('');
+    fileInput.value = '';
+  } catch (err) {
+    console.error('Post creation failed:', err);
+    alert('Failed to create post.');
+  } finally {
+    showLoading(button, false);
+  }
+}
     // Show loading indicator
     function showLoading(element, show) {
       if (show) {
@@ -525,6 +566,7 @@
         element.innerHTML = element.id === 'delete' ? 'Delete' : 'Submit Post';
       }
     }
+
 
     // Load posts from API
     async function loadPosts() {
@@ -539,19 +581,16 @@
           div.className = 'post-card';
           div.setAttribute('data-id', post._id);
           div.innerHTML = `
-           <div class="post-content">
-            <h3>${sanitizeHTML(post.title)}</h3>
-            <div class="description">${post.description}</div>
-           
+            <div class="post-content">
+              <h3>${sanitizeHTML(post.title)}</h3>
+              <div class="description">${post.description}</div>
+              
             </div>
-             <a href="#" class="read-more" onclick="fullpost(this)">read more</a>
-
+            <a href="#" class="read-more" onclick="fullpost(this)">Read More</a>
             <div>
               <button id="update" onclick="updatePost('${post._id}', this.closest('.post-card'))">Update</button>
               <button id="delete" onclick="deletePost('${post._id}', this.closest('.post-card'))">Delete</button>
             </div>
-             
-
             <div class="comment-input">
               <input type="text" class="comment-text" placeholder="Add a comment...">
               <button onclick="addComment('${post._id}', this.closest('.post-card'))">Comment</button>
@@ -571,45 +610,22 @@
       }
     }
 
-    // Create a new post
-    async function createPost() {
-      const button = document.querySelector('#post-form button');
-      showLoading(button, true);
+    // Sanitize HTML to prevent XSS
+    function sanitizeHTML(html) {
+      const div = document.createElement('div');
+      div.textContent = html;
+      return div.innerHTML;
+    }
 
-      const formData = new FormData();
-      const title = document.getElementById('title').value.trim();
-      const description = quill.root.innerHTML;
-      const fileInput = document.getElementById('file');
-
-      if (!title || !description || description === '<p><br></p>') {
-        alert('Title and description are required.');
-        showLoading(button, false);
-        return;
-      }
-
-      formData.append('title', title);
-      formData.append('description', description);
-      if (fileInput.files.length > 0) {
-        formData.append('file', fileInput.files[0]);
-      }
-
-      try {
-        const res = await fetch(`${API}/post`, {
-          method: 'POST',
-          body: formData
-        });
-        if (!res.ok) throw new Error('Failed to create post');
-        await res.json();
-        alert('Post created successfully!');
-        loadPosts();
-        document.getElementById('title').value = '';
-        quill.setText('');
-        fileInput.value = '';
-      } catch (err) {
-        console.error('Post creation failed:', err);
-        alert('Failed to create post.');
-      } finally {
-        showLoading(button, false);
+    
+    // Show loading indicator
+    function showLoading(element, show) {
+      if (show) {
+        element.disabled = true;
+        element.innerHTML = 'Loading...';
+      } else {
+        element.disabled = false;
+        element.innerHTML = element.id === 'delete' ? 'Delete' : 'Submit Post';
       }
     }
 
@@ -689,22 +705,21 @@
       button.textContent = commentsList.classList.contains('show') ? 'Hide Comments' : 'Show Comments';
     }
 
+    // Expand or collapse a post
+    function fullpost(linkElement) {
+      const postCard = linkElement.closest('.post-card');
+      const postContent = postCard.querySelector('.post-content');
 
-    
-function fullpost(linkElement) {
-  const postCard = linkElement.closest('.post-card');
-  const postContent = postCard.querySelector('.post-content');
+      const isExpanded = postContent.style.maxHeight === 'none';
 
-  const isExpanded = postContent.style.maxHeight === 'none';
-
-  if (isExpanded) {
-    postContent.style.maxHeight = '200px';
-    linkElement.textContent = 'Read More';
-  } else {
-    postContent.style.maxHeight = 'none';
-    linkElement.textContent = 'Read Less';
-  }
-}
+      if (isExpanded) {
+        postContent.style.maxHeight = '200px';
+        linkElement.textContent = 'Read More';
+      } else {
+        postContent.style.maxHeight = 'none';
+        linkElement.textContent = 'Read Less';
+      }
+    }
   </script>
 </body>
 </html>
