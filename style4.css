@@ -1,0 +1,305 @@
+/* Reset default styles for consistency */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+
+   /* Header strip styles */
+    .header-strip {
+      background-color: #1e1e2f;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #00bcd4;
+    }
+
+    /* Responsive design (optional) */
+    @media (max-width: 600px) {
+      .nav-links {
+        flex-direction: row;
+        align-items: flex-end;
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+/* Main container */
+#box {
+  display: block;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Heading */
+h2 {
+  font-size: 1.8rem;
+  color: #222;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Post card styling */
+.post-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 10px 0;
+  background: #fafafa;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Post content */
+.post-content {
+  max-height: 200px;
+  overflow: hidden;
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 10px;
+  transition: max-height 0.3s ease;
+}
+
+.post-content.expanded {
+  max-height: none;
+}
+
+/* Buttons container */
+.post-card button {
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Read More button */
+.post-card button:first-of-type {
+  background-color: #007bff;
+  color: #fff;
+  margin-right: 8px;
+}
+
+.post-card button:first-of-type:hover {
+  background-color: #0056b3;
+}
+
+/* Delete button */
+.post-card button:last-of-type {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.post-card button:last-of-type:hover {
+  background-color: #b02a37;
+}
+
+/* Toggle button (Lost View) */
+button:not(.post-card button) {
+  display: block;
+  font-size: 1rem;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: background-color 0.2s ease;
+}
+
+button:not(.post-card button):hover {
+  background-color: #218838;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .post-card {
+    padding: 12px;
+  }
+
+  .post-content {
+    font-size: 0.95rem;
+  }
+
+  .post-card button {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  button:not(.post-card button) {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .post-card {
+    margin: 8px 0;
+    padding: 10px;
+  }
+
+  .post-content {
+    max-height: 150px;
+    font-size: 0.9rem;
+  }
+
+  .post-card button {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+}
+
+
+
+
+/*pdf css*/
+
+
+  /* PDF Container Styles */
+  #pdf-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px 30px;
+    background: linear-gradient(to right, #f0f0f0, #ffffff);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    font-family: 'Segoe UI', sans-serif;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  #pdf-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 28px;
+    border-bottom: 2px solid #00bcd4;
+    padding-bottom: 10px;
+  }
+
+  #pdfList {
+    list-style: none;
+    padding: 0;
+  }
+
+  #pdfList li {
+    background-color: #fafafa;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-left: 5px solid #00bcd4;
+    border-radius: 8px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+  }
+
+  #pdfList li:hover {
+    background-color: #f0faff;
+    transform: scale(1.01);
+  }
+
+  #pdfList strong {
+    color: #222;
+    font-size: 18px;
+  }
+
+  #pdfList a {
+    text-decoration: none;
+    color: #00bcd4;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+
+  #pdfList a:hover {
+    text-decoration: underline;
+  }
+
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive Styling */
+  @media (max-width: 600px) {
+    #pdf-container {
+      padding: 15px 20px;
+    }
+
+    #pdf-container h2 {
+      font-size: 24px;
+    }
+
+    #pdfList li {
+      font-size: 16px;
+    }
+  }
+
+
+
+  
+#imglogo
+{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+

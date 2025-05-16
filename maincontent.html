@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <title>upload</title>
+ <link rel="stylesheet" href="style4.css">
+ <style>
+  #box{
+    display: block;
+  }
+ </style>
+</head>
+<body onload="loadContent()"  onload="loadPDFs();">
+
+ <header class="header-strip">
+    <div class="logo"><span>  <img src="owner.jpeg" alt="owner" id="imglogo"></span></div>
+    <nav class="nav-links">
+      <a href="#">Home</a>
+      <a href="#" id="pdfdisplayer" >PDFs</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </header>
+
+
+
+
+
+  
+  <div id="box">
+      
+ 
+  <h2> Contents</h2>
+  <div id="displayArea"></div>
+
+  <script>
+  async function loadContent() {
+    try {
+      const res = await fetch("https://twondserver.onrender.com/get-all-content");
+      const data = await res.json();
+
+      const display = document.getElementById("displayArea");
+      display.innerHTML = ""; // Clear before loading
+
+      data.forEach(entry => {
+        const postContainer = document.createElement("div");
+        postContainer.classList.add("post-card");
+        postContainer.style.border = "1px solid #ccc";
+        postContainer.style.margin = "10px 0";
+        postContainer.style.padding = "10px";
+
+        // Content wrapper with limited height
+        const contentDiv = document.createElement("div");
+        contentDiv.classList.add("post-content");
+        contentDiv.innerHTML = entry.content;
+        contentDiv.style.maxHeight = "200px";
+        contentDiv.style.overflow = "hidden";
+        contentDiv.style.transition = "max-height 0.3s ease";
+
+        // Read More / Less button
+        const toggleBtn = document.createElement("button");
+        toggleBtn.textContent = "Read More";
+        toggleBtn.style.marginTop = "10px";
+        toggleBtn.onclick = () => togglePost(toggleBtn);
+
+        // Delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.style.marginTop = "10px";
+        deleteBtn.style.marginLeft = "10px";
+        deleteBtn.onclick = async () => {
+          if (confirm("Are you sure you want to delete this content?")) {
+            try {
+              const deleteRes = await fetch(`https://twondserver.onrender.com/delete/${entry._id}`, {
+                method: "DELETE"
+              });
+              const result = await deleteRes.json();
+              if (deleteRes.ok) {
+                alert(result.message || "Content deleted");
+                postContainer.remove(); // Remove from UI
+              } else {
+                alert(result.error || "Failed to delete content");
+              }
+            } catch (error) {
+              alert("Error deleting content");
+              console.error(error);
+            }
+          }
+        };
+
+        postContainer.appendChild(contentDiv);
+        postContainer.appendChild(toggleBtn);
+        postContainer.appendChild(deleteBtn);
+        display.appendChild(postContainer);
+      });
+    } catch (err) {
+      console.error("Error loading content", err);
+      alert("Failed to load content");
+    }
+  }
+
+  function togglePost(button) {
+    const postCard = button.closest(".post-card");
+    const content = postCard.querySelector(".post-content");
+
+    const isExpanded = content.style.maxHeight === "none";
+    if (isExpanded) {
+      content.style.maxHeight = "200px";
+      button.textContent = "Read More";
+    } else {
+      content.style.maxHeight = "none";
+      button.textContent = "Read Less";
+    }
+  }
+</script>
+
+
+
+</div>
+
+
+<div id="pdf-container" style="display: none;">
+
+
+
+
+
+
+  <h2>Available PDFs</h2>
+  <ul id="pdfList"></ul>
+
+  <script>
+    
+
+    async function loadPDFs() {
+      const res = await fetch('http://localhost:5000/pdf/all');
+      const pdfs = await res.json();
+      const list = document.getElementById('pdfList');
+      list.innerHTML = '';
+      pdfs.forEach(pdf => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <strong>${pdf.title}</strong> - ${pdf.description}
+          [<a href="http://localhost:5000/pdf/view/${pdf._id}" target="_blank">View PDF</a>]
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    loadPDFs();
+  </script>
+    
+  </div>
+
+  </script>
+</div>
+
+
+
+<script>
+
+  let  pdfdisplay=document.getElementById("pdfdisplayer");
+
+  let mainbox=document.getElementById("box");
+  let pdfcontain=document.getElementById("pdf-container");
+ 
+
+  pdfdisplay.addEventListener("click",function(){
+    if(mainbox.style.display==="block"){
+      mainbox.style.display="none";
+      pdfdisplay.innerText="posts"
+     
+      pdfcontain.style.display="block";
+    }
+    else{
+      mainbox.style.display="block"
+     
+       pdfdisplay.innerText="pdfs"
+      pdfcontain.style.display="none";
+
+    }
+  })
+
+
+</script>
+
+
+
+
+
+</body>
+
+</html>
+
