@@ -1,725 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="owner.jpeg" type="image/jpeg" />
-  <title>Professional Event Feed</title>
-  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
-  <style>
-    /* Global styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(145deg, #ffffff, #e0e7ff);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-      color: #1e293b;
-    }
-
-    /* Header */
-    h1 {
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: #000000;
-      margin: 40px 0;
-      text-align: center;
-      z-index: 1000;
-      letter-spacing: -0.5px;
-      text-transform: uppercase;
-      background: linear-gradient(to right, #1e40af, #3b82f6);
-      color: white;
-      
-      animation: slideIn 0.8s ease-out;
-    }
-
-    /* Post form container */
-    #post-form {
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-      width: 90%;
-      max-width: 700px;
-      margin: 20px 0;
-      text-align: center;
-      animation: fadeIn 0.7s ease-in-out;
-      border: 1px solid #e2e8f0;
-    }
-
-    #post-form h3 {
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: #1e293b;
-      margin-bottom: 25px;
-      letter-spacing: 0.2px;
-    }
-
-    /* Input fields */
-    input[type="text"],
-    input[type="file"] {
-      width: 100%;
-      padding: 14px;
-      margin: 12px 0;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      font-size: 1rem;
-      background: #f8fafc;
-      transition: all 0.3s ease;
-    }
-
-    input[type="text"]:focus,
-    input[type="file"]:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
-      background: #ffffff;
-    }
-
-    /* Quill editor */
-    #editor-container {
-      height: 220px;
-      margin-bottom: 20px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      overflow: hidden;
-      max-width: 1600px;
-    }
-
-    .ql-toolbar.ql-snow {
-      border: none;
-      border-bottom: 1px solid #e2e8f0;
-      background: #f8fafc;
-      border-radius: 12px 12px 0 0;
-    }
-
-    .ql-container.ql-snow {
-      border: none;
-      border-radius: 0 0 12px 12px;
-    }
-
-    /* Constrain images in Quill editor */
-    .ql-editor img {
-      max-width: 100%;
-      height: auto;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
-
-    /* Buttons */
-    button {
-      padding: 14px 28px;
-      background: linear-gradient(90deg, #3b82f6, #60a5fa);
-      color: #ffffff;
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin: 5px;
-    }
-
-    button:hover {
-      background: linear-gradient(90deg, #2563eb, #3b82f6);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    }
-
-    button#delete {
-      background: linear-gradient(90deg, #ef4444, #f87171);
-    }
-
-    button#delete:hover {
-      background: linear-gradient(90deg, #dc2626, #ef4444);
-    }
-
-    /* Post card */
-    .post-card {
-      background: #ffffff;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-      width: 90%;
-      max-width: 700px;
-      margin: 20px 0;
-      animation: fadeIn 0.7s ease-in-out;
-      border: 1px solid #e2e8f0;
-    }
-
-    .post-card h3 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #1e293b;
-      margin-bottom: 12px;
-    }
-
-    .description {
-      font-size: 1rem;
-      color: #475569;
-      margin-bottom: 20px;
-      line-height: 1.7;
-    }
-
-    /* Constrain images in post description */
-    .description img {
-      max-width: 100%;
-      height: auto;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .post-card a {
-      color: #3b82f6;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    .post-card a:hover {
-      color: #2563eb;
-      text-decoration: underline;
-    }
-
-    /* Comment input */
-    .comment-input {
-      display: flex;
-      gap: 12px;
-      margin-top: 15px;
-    }
-
-    .comment-input input {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      background: #f8fafc;
-      transition: all 0.3s ease;
-    }
-
-    .comment-input input:focus {
-      border-color: #3b82f6;
-      background: #ffffff;
-      box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
-    }
-
-    /* Comment toggle */
-    .comment-toggle {
-      background: #eceff1;
-      color: #37474f;
-      margin-top: 10px;
-    }
-
-    .comment-toggle:hover {
-      background: #dfe4ea;
-    }
-
-    /* Comments list */
-    .comments-list {
-      display: none;
-      margin-top: 20px;
-      padding: 15px;
-      border-top: 1px solid #e2e8f0;
-      background: #f8fafc;
-      border-radius: 8px;
-    }
-
-    .comments-list.show {
-      display: block;
-    }
-
-    .comments-list ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .comments-list li {
-      font-size: 0.95rem;
-      color: #475569;
-      margin-bottom: 10px;
-      line-height: 1.6;
-    }
-
-    .comments-list li b {
-      color: #1e293b;
-      font-weight: 600;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-15px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    /* Responsive design */
-    @media (max-width: 1024px) {
-      h1 {
-        font-size: 2.4rem;
-      }
-
-      #post-form,
-      .post-card {
-        width: 95%;
-        max-width: 600px;
-        padding: 20px;
-      }
-
-      button {
-        padding: 12px 24px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-        margin: 30px 0;
-      }
-
-      #post-form,
-      .post-card {
-        width: 95%;
-        max-width: 500px;
-        padding: 15px;
-        margin: 15px 0;
-      }
-
-      #post-form h3 {
-        font-size: 1.4rem;
-      }
-
-      .post-card h3 {
-        font-size: 1.3rem;
-      }
-
-      input[type="text"],
-      input[type="file"],
-      .comment-input input {
-        padding: 10px;
-        font-size: 0.9rem;
-      }
-
-      button {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-      }
-
-      #editor-container {
-        height: 400px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.8rem;
-        margin: 20px 0;
-      }
-
-      #post-form,
-      .post-card {
-        width: 95%;
-        padding: 12px;
-        margin: 10px 0;
-      }
-
-      #post-form h3 {
-        font-size: 1.2rem;
-      }
-
-      .post-card h3 {
-        font-size: 1.1rem;
-      }
-
-      input[type="text"],
-      input[type="file"],
-      .comment-input input {
-        padding: 8px;
-        font-size: 0.85rem;
-      }
-
-      button {
-        padding: 8px 16px;
-        font-size: 0.85rem;
-      }
-
-      .comment-input {
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      #editor-container {
-        height: 400px;
-        width: 100%;
-      }
-
-      .description {
-        font-size: 0.9rem;
-      }
-
-      .comments-list li {
-        font-size: 0.85rem;
-      }
-    }
-
-
-
-    /* Ensure images in the Quill editor are responsive and don't overflow */
-.ql-editor img {
-  max-width: 100%; /* Prevent image overflow */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: contain; /* Ensure image fits within its box */
-  display: block; /* Center the image */
-  margin: 0 auto; /* Center horizontally */
-}
-
-/* Ensure images in post descriptions don't overflow */
-.description img {
-  max-width: 100%; /* Prevent image overflow */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: contain; /* Ensure image fits within its box */
-  display: block; /* Center the image */
-  margin: 0 auto; /* Center horizontally */
-}
-
-.ql-toolbar {
-  position: fixed; /* Fix the position */
-  top: 0; /* Keep it at the top */
-  left: 0; /* Align it to the left */
-  width: 100%; /* Make sure it spans the entire width */
-  z-index: 1000; /* Make sure it stays above other content */
-  background-color: #fff; /* Optional: Set background color */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for visibility */
-}
-
-.post-content{
-  max-height: 200px;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-
-  </style>
+  <meta charset="UTF-8" />
+  <title>Enhanced Rich Text Editor</title>
+  <link rel="stylesheet" href="style5.css">
 </head>
+<body>
 
-<body onload="loadPosts()">
-  <h1>Professional Event Feed</h1>
 
-  <div id="post-form">
-    <h3>Create a Post</h3>
-    <input type="text" id="title" placeholder="Enter post title"><br><br>
-    <div id="editor-container">
-      <div id="toolbar">
-        <span class="ql-formats">
-          <select class="ql-header">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option selected></option>
-          </select>
-          <button class="ql-bold"></button>
-          <button class="ql-italic"></button>
-          <button class="ql-underline"></button>
-          <button class="ql-link"></button>
-          <button class="ql-image"></button>
-        </span>
-      </div>
-      <div id="editor" placeholder="Write your description here..."></div>
-    </div><br>
-    <input type="file" id="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display: none;"><br><br>
-    <label for="file" style="cursor: pointer; color: blue; text-decoration: underline; display:none;"></label><br><br>
-    <button onclick="createPost()">Submit Post</button>
+  
+ <header class="header-strip">
+    <div class="logo"><span>  <img src="owner.jpeg" alt="owner" id="imglogo"></span></div>
+    <nav class="nav-links">
+      <a href="#">Home</a>
+      <a href="maincontent.html" id="pdfdisplayer" >posts</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </header>
+
+
+
+
+
+  <!-- Toolbar -->
+  <div id="toolbar">
+    <button onclick="format('bold')"><b>B</b></button>
+    <button onclick="format('italic')"><i>I</i></button>
+    <button onclick="format('underline')"><u>U</u></button>
+    <button onclick="format('strikeThrough')"><s>S</s></button>
+    <select onchange="formatBlock(this.value)">
+      <option value="p">Paragraph</option>
+      <option value="h1">Heading 1</option>
+      <option value="h2">Heading 2</option>
+      <option value="h3">Heading 3</option>
+      <option value="blockquote">Blockquote</option>
+    </select>
+    <button onclick="insertLink()">Insert Link</button>
+    <button onclick="insertImage()">Insert Image</button>
+    <button onclick="format('justifyLeft')">Left</button>
+    <button onclick="format('justifyCenter')">Center</button>
+    <button onclick="format('justifyRight')">Right</button>
+    <button onclick="format('justifyFull')">Justify</button>
+    <button onclick="format('insertUnorderedList')">UL</button>
+    <button onclick="format('insertOrderedList')">OL</button>
+
+    <form id="form" enctype="multipart/form-data">
+      <input type="file" id="input" accept="image/*" />
+      <button type="submit">Upload Image</button>
+    </form>
   </div>
 
-  <div id="posts"></div>
+  <!-- Editor Area -->
+  <div id="editor" contenteditable="true"></div>
 
-  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <!-- Save Button -->
+  <button id="saveBtn">Save</button>
+
+  <!-- Loader with Progress Circle -->
+  <div id="loader">
+    <div class="progress-circle">
+      <svg viewBox="0 0 36 36">
+        <circle cx="18" cy="18" r="15.9155" stroke-dasharray="100 100" stroke-dashoffset="100" id="progressCircle"/>
+      </svg>
+      <div class="progress-text">0%</div>
+    </div>
+    <div class="upload-status">Uploading image...</div>
+  </div>
+
+  <!-- Image Preview -->
+  <div id="preview"></div>
+
   <script>
-    
+    const editor = document.getElementById("editor");
+    const saveBtn = document.getElementById("saveBtn");
+    const form = document.getElementById("form");
+    const input = document.getElementById("input");
+    const loader = document.getElementById("loader");
+    const preview = document.getElementById("preview");
+    const progressCircle = document.getElementById('progressCircle');
+    const progressText = document.querySelector('.progress-text');
 
+    // Formatting
+    function format(command) {
+      document.execCommand(command, false, null);
+    }
 
+    function formatBlock(block) {
+      document.execCommand("formatBlock", false, block);
+    }
 
-    const API = 'http://localhost:5000';
-
-// Initialize Quill editor
-const quill = new Quill('#editor', {
-  theme: 'snow',
-  modules: {
-    toolbar: {
-      container: '#toolbar',
-      handlers: {
-        image: imageHandler // Custom image handler
+    function insertLink() {
+      const url = prompt("Enter the URL");
+      if (url) {
+        document.execCommand("createLink", false, url);
       }
     }
-  },
-  placeholder: 'Write your description here...'
-});
 
-// Custom image handler for Quill
-async function imageHandler() {
-  const input = document.createElement('input');
-  input.setAttribute('type', 'file');
-  input.setAttribute('accept', 'image/*');
-  input.click();
+    function insertImage() {
+      const url = prompt("Enter the Image URL");
+      if (url) {
+        document.execCommand("insertImage", false, url);
+      }
+    }
 
-  input.onchange = async () => {
-    const file = input.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('image', file);
-
-    try {
-      const res = await fetch(`${API}/upload-image`, {
-        method: 'POST',
-        body: formData
+    // Save content
+    saveBtn.addEventListener("click", async () => {
+      const html = editor.innerHTML;
+      const res = await fetch("https://twondserver-1.onrender.com/save-html", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: html }),
       });
-      if (!res.ok) throw new Error('Failed to upload image');
-      const { url } = await res.json();
-      const range = quill.getSelection();
-      quill.insertEmbed(range.index, 'image', url); // Insert image URL
-    } catch (err) {
-      console.error('Image upload failed:', err);
-      alert('Failed to upload image.');
-    }
-  };
-}
+      alert(await res.text());
 
-// Create a new post
-async function createPost() {
-  const button = document.querySelector('#post-form button');
-  showLoading(button, true);
+      editor.innerHTML = "";
 
-  const formData = new FormData();
-  const title = document.getElementById('title').value.trim();
-  const description = quill.root.innerHTML;
-  const fileInput = document.getElementById('file');
 
-  if (!title || !description || description === '<p><br></p>') {
-    alert('Title and description are required.');
-    showLoading(button, false);
-    return;
-  }
-
-  formData.append('title', title);
-  formData.append('description', description);
-  if (fileInput.files.length > 0) {
-    formData.append('file', fileInput.files[0]); // For PDFs or other files
-  }
-
-  try {
-    const res = await fetch(`${API}/post`, {
-      method: 'POST',
-      body: formData
     });
-    if (!res.ok) throw new Error('Failed to create post');
-    await res.json();
-    alert('Post created successfully!');
-    loadPosts();
-    document.getElementById('title').value = '';
-    quill.setText('');
-    fileInput.value = '';
-  } catch (err) {
-    console.error('Post creation failed:', err);
-    alert('Failed to create post.');
-  } finally {
-    showLoading(button, false);
-  }
-}
-    // Show loading indicator
-    function showLoading(element, show) {
-      if (show) {
-        element.disabled = true;
-        element.innerHTML = 'Loading...';
-      } else {
-        element.disabled = false;
-        element.innerHTML = element.id === 'delete' ? 'Delete' : 'Submit Post';
-      }
-    }
 
+    // Image upload handler
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const file = input.files[0];
+      if (!file) return alert("Select an image!");
 
-    // Load posts from API
-    async function loadPosts() {
-      try {
-        const res = await fetch(`${API}/posts`);
-        if (!res.ok) throw new Error('Failed to fetch posts');
-        const data = await res.json();
-        const container = document.getElementById('posts');
-        container.innerHTML = '';
-        data.forEach(post => {
-          const div = document.createElement('div');
-          div.className = 'post-card';
-          div.setAttribute('data-id', post._id);
-          div.innerHTML = `
-            <div class="post-content">
-              <h3>${sanitizeHTML(post.title)}</h3>
-              <div class="description">${post.description}</div>
-              
-            </div>
-            <a href="#" class="read-more" onclick="fullpost(this)">Read More</a>
-            <div>
-              <button id="update" onclick="updatePost('${post._id}', this.closest('.post-card'))">Update</button>
-              <button id="delete" onclick="deletePost('${post._id}', this.closest('.post-card'))">Delete</button>
-            </div>
-            <div class="comment-input">
-              <input type="text" class="comment-text" placeholder="Add a comment...">
-              <button onclick="addComment('${post._id}', this.closest('.post-card'))">Comment</button>
-            </div>
-            <button class="comment-toggle" onclick="toggleComments(this)">Show Comments</button>
-            <div class="comments-list">
-              <ul>
-                ${post.comments ? post.comments.map(comment => `<li><b>${sanitizeHTML(comment.user)}</b>: ${sanitizeHTML(comment.text)}</li>`).join('') : ''}
-              </ul>
-            </div>
-          `;
-          container.appendChild(div);
-        });
-      } catch (err) {
-        console.error('Failed to load posts:', err);
-        alert('Failed to load posts. Please try again.');
-      }
-    }
+      const formData = new FormData();
+      formData.append("image", file);
 
-    // Sanitize HTML to prevent XSS
-    function sanitizeHTML(html) {
-      const div = document.createElement('div');
-      div.textContent = html;
-      return div.innerHTML;
-    }
-
-    
-    // Show loading indicator
-    function showLoading(element, show) {
-      if (show) {
-        element.disabled = true;
-        element.innerHTML = 'Loading...';
-      } else {
-        element.disabled = false;
-        element.innerHTML = element.id === 'delete' ? 'Delete' : 'Submit Post';
-      }
-    }
-
-    // Update a post
-    async function updatePost(postId, postElement) {
-      const title = prompt('Enter new title:', postElement.querySelector('h3').textContent);
-      if (!title) return;
-
-      const description = prompt('Enter new description:', postElement.querySelector('.description').innerHTML);
-      if (!description) return;
+      loader.style.display = "block";
+      progressCircle.style.strokeDashoffset = '100';
+      progressText.textContent = '0%';
 
       try {
-        const res = await fetch(`${API}/post/${postId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title, description })
-        });
-        if (!res.ok) throw new Error('Failed to update post');
-        alert('Post updated successfully!');
-        loadPosts();
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://twondserver-1.onrender.com/upload-image');
+
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            const percent = (e.loaded / e.total) * 100;
+            const offset = 100 - percent;
+            progressCircle.style.strokeDashoffset = offset.toFixed(2);
+            progressText.textContent = `${Math.round(percent)}%`;
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status !== 200) throw new Error('Upload failed');
+
+          const data = JSON.parse(xhr.response);
+          if (!data.imageUrl) throw new Error("Upload failed");
+
+          const img = document.createElement("img");
+          img.src = data.imageUrl;
+          img.style.maxWidth = "100%";
+          img.style.display = "block";
+          img.style.marginTop = "10px";
+          editor.appendChild(img);
+
+          // ONLY showing preview, NOT auto-saving to DB
+          preview.innerHTML = `<p>Uploaded:</p><img src="${data.imageUrl}" width="150"/>`;
+        };
+
+        xhr.onerror = () => {
+          throw new Error('Upload failed');
+        };
+
+        xhr.send(formData);
+
       } catch (err) {
-        console.error('Post update failed:', err);
-        alert('Failed to update post.');
-      }
-    }
-
-    // Delete a post
-    async function deletePost(postId, postElement) {
-      if (!confirm('Are you sure you want to delete this post?')) return;
-
-      const button = postElement.querySelector('#delete');
-      showLoading(button, true);
-
-      try {
-        const res = await fetch(`${API}/post/${postId}`, {
-          method: 'DELETE'
-        });
-        if (!res.ok) throw new Error('Failed to delete post');
-        postElement.remove();
-        alert('Post deleted successfully!');
-      } catch (err) {
-        console.error('Error:', err);
-        alert('Failed to delete post.');
+        console.error(err);
+        alert("Upload failed.");
       } finally {
-        showLoading(button, false);
+        setTimeout(() => {
+          loader.style.display = "none";
+        }, 1000);
       }
-    }
-
-    // Add a comment
-    async function addComment(postId, postElement) {
-      const commentInput = postElement.querySelector('.comment-text');
-      const commentText = commentInput.value.trim();
-      if (!commentText) {
-        alert('Comment cannot be empty.');
-        return;
-      }
-
-      try {
-        const res = await fetch(`${API}/post/${postId}/comment`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user: 'Anonymous', text: commentText }) // Replace 'Anonymous' with actual user data
-        });
-        if (!res.ok) throw new Error('Failed to add comment');
-        commentInput.value = '';
-        loadPosts();
-      } catch (err) {
-        console.error('Comment addition failed:', err);
-        alert('Failed to add comment.');
-      }
-    }
-
-    // Toggle comments visibility
-    function toggleComments(button) {
-      const commentsList = button.nextElementSibling;
-      commentsList.classList.toggle('show');
-      button.textContent = commentsList.classList.contains('show') ? 'Hide Comments' : 'Show Comments';
-    }
-
-    // Expand or collapse a post
-    function fullpost(linkElement) {
-      const postCard = linkElement.closest('.post-card');
-      const postContent = postCard.querySelector('.post-content');
-
-      const isExpanded = postContent.style.maxHeight === 'none';
-
-      if (isExpanded) {
-        postContent.style.maxHeight = '200px';
-        linkElement.textContent = 'Read More';
-      } else {
-        postContent.style.maxHeight = 'none';
-        linkElement.textContent = 'Read Less';
-      }
-    }
+    });
   </script>
+
+
+
+
+
+
 </body>
 </html>
