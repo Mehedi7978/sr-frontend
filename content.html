@@ -110,22 +110,27 @@
   <script>
     
 
-    async function loadPDFs() {
-      const res = await fetch('https://new-sr-backend.onrender.com/pdf/all');
-      const pdfs = await res.json();
-      const list = document.getElementById('pdfList');
-      list.innerHTML = '';
-      pdfs.forEach(pdf => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <strong>${pdf.title}</strong> - ${pdf.description}
-          [<a href="https://new-sr-backend.onrender.com/pdf/view/${pdf._id}" target="_blank">View PDF</a>]
-        `;
-        list.appendChild(li);
-      });
-    }
+   async function loadPDFs() {
+  const res = await fetch('https://new-sr-backend.onrender.com/pdf/all');
+  const pdfs = await res.json();
+  const list = document.getElementById('pdfList');
+      
+  list.innerHTML = ''; // Clear the list before appending
+  pdfs.forEach(pdf => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <strong>${pdf.title}</strong> - ${pdf.description}
+      [<a href="https://new-sr-backend.onrender.com/pdf/view/${pdf._id}" target="_blank">View PDF</a>]
+    
+    `;
+    list.appendChild(li); // Append the li to the end of the list
+  });
+}
+
+
 
     loadPDFs();
+
   </script>
     
   </div>
