@@ -111,7 +111,7 @@
     
 
     async function loadPDFs() {
-      const res = await fetch('http://localhost:5000/pdf/all');
+      const res = await fetch('https://new-sr-backend.onrender.com/pdf/all');
       const pdfs = await res.json();
       const list = document.getElementById('pdfList');
       list.innerHTML = '';
